@@ -1,4 +1,3 @@
-// Still need to add functionality to stop users liking same book more than once.
 
 document.addEventListener("DOMContentLoaded", function() {
 
@@ -54,9 +53,16 @@ function attachBooks(data){
       createBookShowSection(book);
       const likeButton = document.getElementById('like-btn')
       // on click uses a fetch request to update the list of users to show that current user also likes it
-      // *** currently nothing stopping someone from liking it more than once
+
       likeButton.addEventListener('click', function(e){
-         book.users.push({"id":1, "username":"pouros"},)
+        //functionality to stop users adding themselves multiple times
+        const me = { id: 1, username: 'pouros' };
+        const allUsernames = book.users.map((user) => user.username);
+        if (allUsernames.includes(me.username)) {
+          alert('You have alread read this book!');
+        } else {
+          book.users.push({ id: 1, username: 'pouros' })
+        };
           const body = {
             "users": book.users
           }
