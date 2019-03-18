@@ -99,8 +99,8 @@ function likeBook(book) {
 function userHasLikedBook(bookUsers) {
   console.log(bookUsers)
   let foundUser = false;
-  bookUsers.forEach((i) => {
-    if (i['id'] === 1) {
+  bookUsers.forEach((user) => {
+    if (user['id'] === 1) {
       foundUser = true;
       return;
     }
