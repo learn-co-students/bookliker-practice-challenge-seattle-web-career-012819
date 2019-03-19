@@ -3,27 +3,27 @@ document.addEventListener("DOMContentLoaded", function() {});
 const BOOKS_URL = 'http://localhost:3000/books';
 const USERS_URL = 'http://localhost:3000/users';
 
-renderBooks()
+Book.renderBooks(BOOKS_URL)
 
-function renderBooks() {
-  const listUl = document.getElementById('list');
-
-  fetch(BOOKS_URL)
-    .then(res => res.json())
-    .then(json => addBooks(json, listUl))
-}
-
-function addBooks(books, parentUl) {
-  books.forEach(function(book) {
-    li = document.createElement('li')
-    li.innerText = book.title
-    li.setAttribute('id', book.id)
-    parentUl.appendChild(li)
-
-    li.addEventListener('click', () => { displayBook(book) })
-  })
-}
-
+// function renderBooks() {
+//   const listUl = document.getElementById('list');
+//
+//   fetch(BOOKS_URL)
+//     .then(res => res.json())
+//     .then(json => addBooks(json, listUl))
+// }
+//
+// function addBooks(books, parentUl) {
+//   books.forEach(function(book) {
+//     li = document.createElement('li')
+//     li.innerText = book.title
+//     li.setAttribute('id', book.id)
+//     parentUl.appendChild(li)
+//
+//     li.addEventListener('click', () => { displayBook(book) })
+//   })
+// }
+//
 // function displayBook(book) {
 //   let showPanel = document.getElementById('show-panel')
 //   let showPanelKids = Array.from(showPanel.children)
@@ -65,49 +65,49 @@ function addBooks(books, parentUl) {
 // }
 
 
-function displayBook(book) {
-  let showPanel = document.getElementById('show-panel')
-  let showPanelKids = Array.from(showPanel.children)
-  showPanelKids.forEach(function(child) {
-    showPanel.removeChild(child);
-  })
-
-  let titleH4 = createElmt('h4', showPanel, (h4) => h4.innerText = book.title);
-  let image = createElmt('img', showPanel, (src) => src.setAttribute('src', book.img_url));
-  let descrP = createElmt('p', showPanel, (p) => p.innerText = book.description);
-
-  let likers = createElmt('ul', showPanel, (ul) => ul.innerText = 'Users Who\'ve Read This Book');
-  book.users.forEach(function(usr) {
-    createElmt('li', likers, (li) => li.innerText = usr.username)
-  })
-
-  let readButton = createElmt('button', showPanel, (button) => {
-    button.innerText = 'Read Book'
-    button.setAttribute('type', 'button')
-  });
-  readButton.addEventListener('click', () => { readBook(book) })
-}
-
-function createElmt(elmtName, parent, callback) {
-  let e = document.createElement(elmtName)
-  callback(e)
-  parent.appendChild(e)
-  return e
-}
-
-function readBook(book) {
-  let currentUser = {"id":1, "username":"pouros"};
-  let allUsers = book.users;
-
-  if (allUsers.filter(usr => usr.id == currentUser.id).length == 0) {
-    allUsers.push(currentUser);
-  } else { allUsers = allUsers.filter(usr => usr.id != currentUser.id)  }
-
-  fetch(BOOKS_URL + '/' + book.id, {
-    method: 'PATCH',
-    headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify({'users': allUsers})
-  })
-    .then(res => res.json())
-    .then(json => displayBook(json))
-}
+// function displayBook(book) {
+//   let showPanel = document.getElementById('show-panel')
+//   let showPanelKids = Array.from(showPanel.children)
+//   showPanelKids.forEach(function(child) {
+//     showPanel.removeChild(child);
+//   })
+//
+//   let titleH4 = createElmt('h4', showPanel, (h4) => h4.innerText = book.title);
+//   let image = createElmt('img', showPanel, (src) => src.setAttribute('src', book.img_url));
+//   let descrP = createElmt('p', showPanel, (p) => p.innerText = book.description);
+//
+//   let likers = createElmt('ul', showPanel, (ul) => ul.innerText = 'Users Who\'ve Read This Book');
+//   book.users.forEach(function(usr) {
+//     createElmt('li', likers, (li) => li.innerText = usr.username)
+//   })
+//
+//   let readButton = createElmt('button', showPanel, (button) => {
+//     button.innerText = 'Read Book'
+//     button.setAttribute('type', 'button')
+//   });
+//   readButton.addEventListener('click', () => { readBook(book) })
+// }
+//
+// function createElmt(elmtName, parent, callback) {
+//   let e = document.createElement(elmtName)
+//   callback(e)
+//   parent.appendChild(e)
+//   return e
+// }
+//
+// function readBook(book) {
+//   let currentUser = {"id":1, "username":"pouros"};
+//   let allUsers = book.users;
+//
+//   if (allUsers.filter(usr => usr.id == currentUser.id).length == 0) {
+//     allUsers.push(currentUser);
+//   } else { allUsers = allUsers.filter(usr => usr.id != currentUser.id)  }
+//
+//   fetch(BOOKS_URL + '/' + book.id, {
+//     method: 'PATCH',
+//     headers: {'Content-Type': 'application/json'},
+//     body: JSON.stringify({'users': allUsers})
+//   })
+//     .then(res => res.json())
+//     .then(json => displayBook(json))
+// }
